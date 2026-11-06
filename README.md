@@ -1,57 +1,413 @@
-# MealBudget
+# 🍽️ MealBudget
 
-Budget-aware meal planner (MERN). Plan a week of meals against a rupee budget, see which recipes your pantry already covers, and generate a shopping list for only what is missing.
+### Eat Better. Spend Smarter.
 
-**Stack:** React 18 + Vite + Tailwind CSS 3 + React Router + Axios + Recharts + Lucide | Node + Express + Mongoose | MongoDB Atlas | JWT + bcryptjs
+**MealBudget** is a budget-aware meal planning application that helps users plan meals, manage pantry inventory, discover affordable recipes, and control their food expenses — all in one place.
 
-## 1. Prerequisites
-- Node.js 18.11 or newer
-- A MongoDB Atlas cluster (free M0 is fine). In Atlas: create a database user, allow your IP under *Network Access*, then copy the connection string (*Connect > Drivers*).
+Built with the **MERN stack**, MealBudget combines meal planning, ingredient tracking, budget management, and explainable recipe recommendations to help users make smarter food decisions without exceeding their budget.
 
-## 2. Run the backend
+---
+
+## ✨ Features
+
+### 📊 Smart Dashboard
+- Get an overview of your weekly food budget.
+- Track expenses and estimated remaining budget.
+- Monitor pantry inventory and meal planning activity.
+- View useful insights into your food spending.
+
+### 🥗 Intelligent Recipe Recommendations
+- Discover recipes based on your available pantry ingredients.
+- Find affordable meals that fit your budget.
+- View pantry match percentages.
+- Understand additional ingredient requirements and estimated purchase costs.
+- Get explainable, rule-based recommendations.
+
+### 🧺 Pantry Management
+- Maintain an inventory of available ingredients.
+- Track ingredient quantities and units.
+- Add, update, and remove pantry items.
+- Load a sample pantry to explore the application.
+
+### 📅 Weekly Meal Planner
+- Organize meals across a Monday–Sunday schedule.
+- Plan meals across different time slots.
+- Evaluate your weekly plan against your available pantry.
+- Avoid counting the same ingredient purchase multiple times.
+
+### 💰 Budget & Expense Tracking
+- Set and manage your weekly food budget.
+- Record food-related expenses.
+- Monitor estimated expenditure.
+- Track how much of your budget remains available.
+
+### 🛒 Smart Shopping List
+- Generate shopping lists based on your meal plan.
+- Identify ingredients missing from your pantry.
+- Track purchased items.
+- Automatically update pantry inventory and expenses when items are marked as purchased.
+
+### 📈 Analytics & Insights
+- Visualize food expenditure.
+- Explore budget utilization.
+- Understand spending patterns through interactive charts.
+
+---
+
+## 🛠️ Tech Stack
+
+| Category | Technologies |
+|---|---|
+| Frontend | React 18, Vite |
+| Styling | Tailwind CSS 3 |
+| Routing | React Router DOM |
+| HTTP Client | Axios |
+| Charts | Recharts |
+| Icons | Lucide React |
+| Backend | Node.js, Express.js |
+| Database | MongoDB Atlas |
+| ODM | Mongoose |
+| Authentication | JWT, bcryptjs |
+| Validation | Express Validator |
+| Security | Helmet, Express Rate Limit |
+| Deployment | Vercel, Render |
+
+---
+
+## 🏗️ Architecture
+
+MealBudget follows a client-server architecture.
+
+```text
+                ┌──────────────────────┐
+                │      React UI        │
+                │   React + Vite       │
+                └──────────┬───────────┘
+                           │
+                      Axios / REST
+                           │
+                ┌──────────▼───────────┐
+                │    Express API       │
+                │      Node.js         │
+                └──────────┬───────────┘
+                           │
+                ┌──────────▼───────────┐
+                │     Mongoose         │
+                │  Data Management     │
+                └──────────┬───────────┘
+                           │
+                ┌──────────▼───────────┐
+                │    MongoDB Atlas     │
+                │      Database       │
+                └──────────────────────┘
+```
+
+The backend exposes REST API endpoints, while the frontend communicates with the backend using Axios.
+
+Authentication is handled using JSON Web Tokens, with passwords securely hashed using bcryptjs.
+
+---
+
+## 📁 Project Structure
+
+```text
+MealBudget/
+│
+├── backend/
+│   ├── config/
+│   ├── controllers/
+│   ├── middleware/
+│   ├── models/
+│   ├── routes/
+│   ├── services/
+│   ├── tests/
+│   ├── utils/
+│   ├── .env.example
+│   ├── package.json
+│   └── server.js
+│
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── context/
+│   │   ├── hooks/
+│   │   ├── layouts/
+│   │   ├── pages/
+│   │   ├── services/
+│   │   └── utils/
+│   ├── .env.example
+│   ├── package.json
+│   ├── vercel.json
+│   └── vite.config.js
+│
+├── .gitignore
+└── README.md
+```
+
+---
+
+## 🚀 Getting Started
+
+Follow these instructions to run MealBudget locally.
+
+### Prerequisites
+
+Make sure you have the following installed:
+
+- [Node.js](https://nodejs.org/) (18.11 or newer)
+- npm
+- [MongoDB Atlas](https://www.mongodb.com/atlas) account
+- Git
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/YOUR_USERNAME/MealBudget.git
+cd MealBudget
+```
+
+### 2. Backend Setup
+
+Navigate to the backend directory:
+
 ```bash
 cd backend
-npm install
-cp .env.example .env      # then edit .env: set MONGO_URI and a long random JWT_SECRET
-npm run dev               # http://localhost:5000  (health check: /api/health)
 ```
-On first start the 11 built-in Indian recipes are seeded automatically. `npm run seed` resets them.
 
-## 3. Run the frontend
+Install dependencies:
+
+```bash
+npm install
+```
+
+Create your environment file:
+
+```bash
+cp .env.example .env
+```
+
+On Windows PowerShell, you can alternatively use:
+
+```powershell
+Copy-Item .env.example .env
+```
+
+Configure the following variables in `backend/.env`:
+
+```env
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_long_random_secret
+CLIENT_URL=http://localhost:5173
+```
+
+Start the development server:
+
+```bash
+npm run dev
+```
+
+The backend will run at:
+
+`http://localhost:5000`
+
+Health check:
+
+`http://localhost:5000/api/health`
+
+**Note:** On the first successful backend startup, the application automatically seeds 11 built-in Indian recipes.
+
+### 3. Frontend Setup
+
+Open another terminal and navigate to the frontend directory:
+
 ```bash
 cd frontend
-npm install
-npm run dev               # http://localhost:5173  (proxies /api to localhost:5000)
 ```
-Register an account, open **Pantry** and click **Load sample pantry**, then try **Recommendations**.
 
-For a production build: `npm run build`, and set `VITE_API_URL` (see `frontend/.env.example`) and the backend `CLIENT_URL` to your deployed origins.
+Install dependencies:
 
-## 4. Tests
+```bash
+npm install
+```
+
+Start the development server:
+
+```bash
+npm run dev
+```
+
+The frontend will run at:
+
+`http://localhost:5173`
+
+The Vite development server proxies `/api` requests to the local Express backend.
+
+### 4. Explore MealBudget
+
+1. Open the frontend in your browser.
+2. Register a new account.
+3. Navigate to **Pantry**.
+4. Select **Load sample pantry**.
+5. Explore the recipe recommendations.
+6. Create a weekly meal plan.
+7. Generate your shopping list.
+8. Track your expenses and budget.
+
+---
+
+## 🌐 Deployment
+
+MealBudget is designed to be deployed using:
+
+- **Frontend:** Vercel
+- **Backend:** Render
+- **Database:** MongoDB Atlas
+
+### Backend — Render
+
+Create a new Render Web Service and configure:
+
+| Setting | Value |
+|---|---|
+| Root Directory | `backend` |
+| Runtime | Node |
+| Build Command | `npm install` |
+| Start Command | `npm start` |
+
+Configure these environment variables:
+
+```env
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_production_secret
+CLIENT_URL=https://your-vercel-domain.vercel.app
+```
+
+### Frontend — Vercel
+
+Import your GitHub repository into Vercel.
+
+Configure:
+
+| Setting | Value |
+|---|---|
+| Root Directory | `frontend` |
+| Framework | Vite |
+| Build Command | `npm run build` |
+| Output Directory | `dist` |
+
+Add the following environment variable:
+
+```env
+VITE_API_URL=https://your-render-backend.onrender.com/api
+```
+
+Replace the example URLs with your actual deployment URLs.
+
+---
+
+## 🧪 Testing
+
+### Backend Unit Tests
+
+Run the engine tests:
+
 ```bash
 cd backend
-npm test                                                     # engine unit tests, no database
-TEST_MONGO_URI=mongodb://127.0.0.1:27017/mealbudget_test npm run test:e2e   # full API flow, drops that _test database
+npm test
 ```
 
-## 5. How the numbers work
-- Money is stored as integer **paise**; the UI shows rupees. All costs are *estimates* from editable prices.
-- Units are normalised (g, kg, ml, l, tbsp, tsp, pcs). A pantry item only counts if its unit type matches (kg never satisfies "pcs").
-- **Pantry match %** = ingredients you have in sufficient quantity / total ingredients x 100.
-- **Recommendations** are rule-based and explainable (not AI): affordable first, then higher match, then lower extra purchase cost, then lower total cost.
-- **Weekly plan** is walked Monday to Sunday against a virtual copy of your pantry, so an ingredient is never charged twice and the shopping list totals add up across meals.
-- **Estimated expenditure** = recorded expenses + still-to-buy estimate. Remaining budget = budget - that.
-- Marking a shopping item **purchased** adds it to your pantry and records an expense; un-marking reverses both.
+### Backend Integration Tests
 
-## 6. Structure
-```
-backend/   config/ controllers/ middleware/ models/ routes/ services/ utils/ tests/ server.js
-frontend/  src/{components,pages,layouts,context,hooks,services,utils}
-```
-Business logic lives in `backend/services/engine.js` (pure functions) and the other services.
+The integration tests require a separate MongoDB test database.
 
-## 7. Known limitations
-- Recipe cards use an emoji tile by default; paste an image URL when adding a recipe to show a photo.
+Configure `TEST_MONGO_URI` and run:
+
+```bash
+npm run test:e2e
+```
+
+**Warning:** The end-to-end test suite drops its configured test database. Never point `TEST_MONGO_URI` at your production database.
+
+### Frontend Production Build
+
+```bash
+cd frontend
+npm run build
+```
+
+---
+
+## 🧠 How the Recommendation Engine Works
+
+MealBudget uses a rule-based recommendation engine rather than relying on an AI model.
+
+Recipes are evaluated using factors such as:
+
+1. Affordability.
+2. Pantry ingredient availability.
+3. Additional ingredient purchase requirements.
+4. Estimated total cost.
+
+Recommendations are prioritized using these factors, making the results explainable and predictable.
+
+### Budget Calculation
+
+Money is stored internally as integer paise, while the interface displays amounts in Indian Rupees.
+
+The estimated expenditure is calculated as:
+
+**Estimated Expenditure = Recorded Expenses + Remaining Purchase Estimate**
+
+The weekly planning engine also simulates ingredient availability from Monday through Sunday to avoid counting the same ingredient purchase multiple times.
+
+---
+
+## ⚠️ Current Limitations
+
+- Recipe cards display an emoji by default unless an image URL is provided.
 - Cooking a planned meal does not automatically deduct pantry stock.
-- The shopping list is recalculated with **Sync with plan** (it does not update live as you edit the plan).
-- Built-in recipes are read-only; users can create, edit and delete their own.
+- The shopping list needs to be synchronized with the meal plan using **Sync with plan**.
+- Built-in recipes are read-only; users can manage their own recipes.
+
+---
+
+## 🔮 Future Improvements
+
+Potential areas for further development include:
+
+- AI-assisted meal suggestions.
+- Nutritional information and dietary preferences.
+- More advanced ingredient substitution.
+- Recipe image integration.
+- Improved spending predictions.
+- Enhanced meal planning personalization.
+- Mobile-friendly experience improvements.
+
+---
+
+## 🤝 Contributing
+
+Contributions, suggestions, and bug reports are welcome.
+
+If you'd like to contribute:
+
+1. Fork the repository.
+2. Create a feature branch.
+3. Make your changes.
+4. Submit a pull request.
+
+---
+
+## 📄 License
+
+This project currently does not specify a license. All rights are reserved unless a license is added to the repository.
+
+---
+
+<p align="center">
+  **MealBudget — Eat Better. Spend Smarter.** 🍽️
+</p>
+
+<p align="center">
+  Built with ❤️ using the MERN Stack.
+</p>
